@@ -3,11 +3,16 @@
     <header>
       <b-container fluid>
         <b-row class="mb-md-3">
-          <b-col id="burger-menu" order="2" class="mb-3 mb-md-0 d-xl-none" @click="burgerMenuActive = !burgerMenuActive" :class="{ change: burgerMenuActive }">
+          <!-- КРЕСТ КОТОРЫЙ ЗАКРЫВАЕТ МЕНЮ - нужно просто взять функцию на нажатие и передать её пунку -->
+          <b-col id="burger-menu" order="2" class="mb-3 mb-md-0 d-xl-none" @click="openBurgerMenu" :class="{ change: burgerMenuActive }">
             <div class="bar1"></div>
             <div class="bar2"></div>
             <div class="bar3"></div>
           </b-col>
+
+<!--          just for fun!-->
+
+          <!-- МОБИЛЬНАЯ ПАНЕЛЬ -->
           <div id="mobile-menu" v-if="HEADER_MENU && burgerMenuActive">
             <b-nav justified>
               <div class="mobile-icons d-md-none">
@@ -50,15 +55,16 @@
                     </li>
                   </ul>
                 </b-collapse>
+                <!-- меню которое появляется на красном фоне с кнопки бургер -->
                 <ul class="mobile-menu-list d-none d-lg-block">
                   <li v-for="subcat in category.children" :key="subcat.id">
-                    <b-link :to="`/${subcat.path}`">{{ subcat.name.toLowerCase() }}</b-link>
+                    <b-link @click="openBurgerMenu" :to="`/${subcat.path}`">{{ subcat.name.toLowerCase() }}</b-link>
                   </li>
                 </ul>
               </b-col>
             </b-nav>
           </div>
-          <div class="white-line"></div>
+          <div class="white-line" />
           <b-col cols="12" md="5" xl="4" order-md="2" order-xl="1" class="d-none d-md-block">
             <b-row class="contacts-row">
               <b-col cols="12">
@@ -177,6 +183,7 @@
             </div>
           </b-col>
         </b-row>
+
         <b-row id="search-field">
           <b-col cols="12" lg="10" offset-lg="1" xl="8" offset-xl="2">
             <b-form @submit.prevent="search" method="GET">
@@ -218,7 +225,7 @@
                         <b-link :to="`/${subcat.path}`"><p class="dropdown-category-header">{{ subcat.name }}</p></b-link>
                         <ul class="dropdown-category-list">
                           <li v-for="subsubcat in subcat.children" :key="subsubcat.id">
-                            <b-link :to="`/${subsubcat.path}`">{{ subsubcat.name }}</b-link>
+                            <b-link v-on:click='testOnClick' :to="`/${subsubcat.path}`">{{ subsubcat.name }}</b-link>
                           </li>
                         </ul>
                       </b-col>
@@ -422,6 +429,12 @@ export default {
       'UPDATE_USER',
       'LOGOUT'
     ]),
+    openBurgerMenu (){
+     this.burgerMenuActive = !this.burgerMenuActive
+    },
+    testOnClick () {
+      console.log('testOnClick')
+    },
     changeCity (city) {
       this.$store.commit('SET_CURRENT_CITY', city.text)
       if (this.CURRENT_USER !== null) {
@@ -516,6 +529,7 @@ export default {
     }
   },
   mounted () {
+    console.log('mounted see how it is work!')
     this.GET_CURRENT_USER_FROM_API()
     this.GET_BASKET_FROM_API()
     this.GET_CONTACTS_FROM_API()
