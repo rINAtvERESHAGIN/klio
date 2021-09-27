@@ -127,7 +127,6 @@ export default {
   },
   watch: {
     childrenItem: function () {
-      console.log('childrenItem', this.childrenItem)
     }
   }
 }

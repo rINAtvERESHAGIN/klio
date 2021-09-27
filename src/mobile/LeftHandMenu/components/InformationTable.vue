@@ -98,7 +98,6 @@ export default {
     ])
   },
   mounted () {
-    console.log('this.FOOTER_MENU', this.FOOTER_MENU)
   }
 }
 </script>
