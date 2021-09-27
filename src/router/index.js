@@ -10,7 +10,6 @@ import SearchResults from '../views/k-search-results.vue'
 import StaticPageDetail from '../views/k-static-page-detail.vue'
 import PageNotFound from '../views/k-page-not-found.vue'
 import Profile from '../views/k-profile.vue'
-
 // Shop views
 import Basket from '../views/shop/k-basket.vue'
 import Catalog from '../views/shop/k-catalog.vue'

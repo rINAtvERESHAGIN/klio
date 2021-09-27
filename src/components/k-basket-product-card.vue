@@ -12,7 +12,7 @@
             >
             <img
               v-else
-              src="@/assets/icons/diamond_grey.svg"
+              src="../assets/icons/diamond_grey.svg"
               width="100px"
               alt="no image available"
               class="product-img-none"
@@ -67,15 +67,6 @@
             <b-button v-if="Number(product.in_stock) === 0" squared class="btn btn-yellow" disabled>
               ожидается поставка
             </b-button>
-<!--            <b-button-->
-<!--              v-else-->
-<!--              squared-->
-<!--              class="btn btn-yellow"-->
-<!--              :disabled="Number(product.quantity) === Number(productAmount)"-->
-<!--              @click="updateBasket(product.id, productAmount)"-->
-<!--            >-->
-<!--              пересчитать-->
-<!--            </b-button>-->
           </b-col>
           <b-col cols="12" md="6" lg="3" order="1" order-md="2" class="mb-3 mb-md-0">
             <div class="product-ammount" v-if="Number(product.in_stock) !== 0">
@@ -160,8 +151,8 @@ export default {
     },
     itemSum () {
       this.priceType = 'initial'
-      var product = this.product
-      var price = product.price
+      const product = this.product
+      let price = product.price
       if (product.special && product.special.new_price) {
         if (this.productAmount >= product.special.threshold) {
           price = product.special.new_price
@@ -181,7 +172,7 @@ export default {
           }
         }
       }
-      var result = price * (this.productAmount / product.base_amount)
+      const result = price * (this.productAmount / product.base_amount)
       return result.toFixed(2)
     },
     removeFromFavorites (id) {

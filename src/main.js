@@ -4,6 +4,7 @@ import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import Vuelidate from 'vuelidate'
 import VueSlider from 'vue-slider-component'
+import ClientOnly from 'vue-client-only'
 import router from './router'
 import store from './vuex/store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -14,12 +15,19 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-slider-component/theme/default.css'
+import 'vue-slider-component/dist-css/vue-slider-component.css'
 import 'hooper/dist/hooper.css'
 import './assets/css/style.css'
 import './assets/scss/style.scss'
+import vuetify from './plugins/vuetify'
 
-var VueScrollTo = require('vue-scrollto')
+const VueCarousel = require('vue-carousel')
+VueCarousel.default.install(Vue)
 
+const VueGallery = require('vue-gallery')
+Vue.component('vue-gallery', VueGallery)
+
+const VueScrollTo = require('vue-scrollto')
 Vue.config.productionTip = false
 Vue.use({
   install (Vue) {
@@ -34,6 +42,7 @@ Vue.use(BootstrapVue)
 library.add(faRubleSign)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('VueSlider', VueSlider)
+Vue.component('ClientOnly', ClientOnly)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 Vue.use(IconsPlugin)
 Vue.use(VueCookies)
@@ -52,6 +61,7 @@ Vue.use(VueScrollTo, {
 })
 
 new Vue({
+  vuetify,
   router,
   render: h => h(App),
   store

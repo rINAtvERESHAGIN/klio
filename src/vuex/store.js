@@ -32,7 +32,31 @@ const store = new Vuex.Store({
     contacts: [],
     favorites: [],
     footerMenu: null,
-    headerMenu: null,
+    headerMenu: [
+      {
+        id: 1,
+        name: '',
+        letter: '',
+        slug: '',
+        icon: null,
+        path: '',
+        related_type: '',
+        link: '',
+        children: [
+          {
+            id: 1,
+            name: '',
+            letter: null,
+            slug: '',
+            icon: null,
+            path: '',
+            related_type: '',
+            link: '',
+            children: []
+          }
+        ]
+      }
+    ],
     leftMenu: null,
     orderActive: null,
     orders: [],
@@ -44,13 +68,58 @@ const store = new Vuex.Store({
     specials: [],
     special: null,
     specialProducts: [],
-    subHeaderMenu: null,
+    subHeaderMenu: [
+      {
+        id: 1,
+        name: '',
+        letter: '',
+        slug: '',
+        icon: null,
+        path: '',
+        related_type: '',
+        link: '',
+        children: [
+          {
+            id: 1,
+            name: '',
+            letter: null,
+            slug: '',
+            icon: null,
+            path: '',
+            related_type: '',
+            link: '',
+            children: []
+          }
+        ]
+      }
+    ],
     user: null,
     city: null,
-    loadingBasket: 'pending'
+    loadingBasket: 'pending',
+    loadingBanners: 'pending',
+    loadingBrands: 'pending',
+    loadingCategories: 'pending',
+    loadingNewProds: 'pending',
+    loadingSpecProds: 'pending',
+
   },
 
   mutations: {
+    SET_BANNERS_STATE: (state, status) => {
+      state.loadingBanners = status
+    },
+    SET_BRANDS_STATE: (state, status) => {
+      state.loadingBrands = status
+    },
+    SET_CATEGORIES_MAIN_STATE: (state, status) => {
+      state.loadingCategories = status
+    },
+    SET_PRODUCTS_SPECIAL_MAIN_STATE: (state, status) => {
+      state.loadingSpecProds = status
+    },
+    SET_PRODUCTS_NEW_MAIN_STATE: (state, status) => {
+      state.loadingNewProds = status
+    },
     ERASE_BASKET_ACTIVE: (state) => {
       state.basket = null
     },
@@ -237,7 +306,10 @@ const store = new Vuex.Store({
           commit('ERASE_BASKET_ACTIVE')
         })
     },
-    CHANGE_ACTIVE_ORDER_TO_PENDING ({ commit, dispatch }) {
+    CHANGE_ACTIVE_ORDER_TO_PENDING ({
+      commit,
+      dispatch
+    }) {
       return this.$axios({
         method: 'PUT',
         url: 'basket/order/active/to-pending',
@@ -312,7 +384,12 @@ const store = new Vuex.Store({
           return err
         })
     },
-    SET_ORDER_B2P_STATUS ({ commit }, { id, operation, resultCode, status }) {
+    SET_ORDER_B2P_STATUS ({ commit }, {
+      id,
+      operation,
+      resultCode,
+      status
+    }) {
       return this.$axios({
         method: 'PUT',
         url: `basket/order/payment/${id}/processing/status`,
@@ -366,6 +443,7 @@ const store = new Vuex.Store({
         .get('general/banners/list')
         .then((res) => {
           commit('SET_BANNERS', res.data)
+          commit('SET_BANNERS_STATE', res.data.length ? 'success' : 'empty')
           return res
         })
         .catch((err) => {
@@ -391,6 +469,7 @@ const store = new Vuex.Store({
         .get('products/brands/list')
         .then((res) => {
           commit('SET_BRANDS', res.data)
+          commit('SET_BRANDS_STATE', res.data.length ? 'success' : 'empty')
           return res
         })
         .catch((err) => {
@@ -501,13 +580,15 @@ const store = new Vuex.Store({
         .get('products/categories/list/mainpage')
         .then((res) => {
           commit('SET_CATEGORIES_MAIN', res.data)
+          commit('SET_CATEGORIES_MAIN_STATE', res.data.length ? 'success' : 'empty')
           return res
         })
         .catch((err) => {
           return err
         })
     },
-    GET_CITIES_FROM_API ({ commit }, finalizer = () => {}) {
+    GET_CITIES_FROM_API ({ commit }, finalizer = () => {
+    }) {
       return this.$axios
         .get('general/cities/list')
         .then((res) => {
@@ -528,7 +609,10 @@ const store = new Vuex.Store({
           return contacts
         })
     },
-    GET_CURRENT_USER_FROM_API ({ commit, dispatch }) {
+    GET_CURRENT_USER_FROM_API ({
+      commit,
+      dispatch
+    }) {
       this.$axios
         .get('users/current', { withCredentials: true })
         .then((res) => {
@@ -558,9 +642,11 @@ const store = new Vuex.Store({
         .then((menus) => {
           var isLeftMenu = false
           for (var i = 0; i < menus.data.length; i++) {
-            if (menus.data[i].position === 'header') commit('SET_HEADER_MENU', menus.data[i])
-            else if (menus.data[i].position === 'subheader') commit('SET_SUBHEADER_MENU', menus.data[i])
-            else if (menus.data[i].position === 'leftbar') {
+            if (menus.data[i].position === 'header') {
+              commit('SET_HEADER_MENU', menus.data[i])
+            } else if (menus.data[i].position === 'subheader') {
+              commit('SET_SUBHEADER_MENU', menus.data[i])
+            } else if (menus.data[i].position === 'leftbar') {
               commit('SET_LEFT_MENU', menus.data[i])
               isLeftMenu = true
             } else if (menus.data[i].position === 'footer') commit('SET_FOOTER_MENU', menus.data[i])
@@ -574,6 +660,7 @@ const store = new Vuex.Store({
         .get('products/list/mainpage/new')
         .then((res) => {
           commit('SET_PRODUCTS_NEW_MAIN', res.data)
+          commit('SET_PRODUCTS_NEW_MAIN_STATE', res.data.length ? 'success' : 'empty')
           return res
         })
         .catch((err) => {
@@ -653,6 +740,7 @@ const store = new Vuex.Store({
         .get('products/list/mainpage/special')
         .then((res) => {
           commit('SET_PRODUCTS_SPECIAL_MAIN', res.data)
+          commit('SET_PRODUCTS_SPECIAL_MAIN_STATE', res.data.length ? 'success' : 'empty')
           return res
         })
         .catch((err) => {
@@ -679,7 +767,10 @@ const store = new Vuex.Store({
       return this.$axios({
         method: 'PUT',
         url: 'basket/order/active/update',
-        data: { step: data.step, promocode: data.promocode },
+        data: {
+          step: data.step,
+          promocode: data.promocode
+        },
         withCredentials: true
       })
         .then((res) => {
@@ -772,6 +863,21 @@ const store = new Vuex.Store({
   },
 
   getters: {
+    LOADING_BANNERS (state) {
+      return state.loadingBanners
+    },
+    LOADING_BRANDS (state) {
+      return state.loadingBrands
+    },
+    LOADING_CATEGORIES_MAIN (state) {
+      return state.loadingCategories
+    },
+    LOADING_PRODUCTS_NEW_MAIN (state) {
+      return state.loadingNewProds
+    },
+    LOADING_PRODUCTS_SPECIAL_MAIN (state) {
+      return state.loadingSpecProds
+    },
     BANNERS (state) {
       return state.banners
     },
