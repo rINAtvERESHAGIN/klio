@@ -20,8 +20,8 @@
           <UserBtns/>
         </b-row>
 
-<!--нужно переделать архитектуру значений - проблема переноса в том, что v-model - хочет поменять значения
-props, но сделать этого не может -->
+        <!--нужно переделать архитектуру значений - проблема переноса в том, что v-model - хочет поменять значения
+        props, но сделать этого не может -->
         <b-row id="search-field">
           <b-col cols="12" lg="12" offset-lg="0" xl="12" offset-xl="0">
             <b-form @submit.prevent="search" method="GET">
@@ -50,68 +50,14 @@ props, но сделать этого не может -->
                v-if="HEADER_MENU"
                class="d-none d-xl-block"
         >
-          <b-col cols="12"
-                 id="top-menu-container"
-          >
-            <b-nav justified>
-              <b-nav-item v-for="(category, cIndex) in HEADER_MENU.items"
-                          :key="category.id"
-                          :to="`/${category.path}`"
-              >
-                <div class="dropdown b-dropdown btn-group"
-                     :class="{ active: cIndex === showDropdown }"
-                     @mouseover="showDropdown = cIndex"
-                     @mouseleave="showDropdown = null">
-                  <span class="dropdown-toggle dropdown-toggle-no-caret"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                    {{ category.name }}
-                  </span>
-
-                  <client-only>
-                    <div role="menu"
-                         tabindex="-1"
-                         class="dropdown-menu"
-                         ref="dropdownItem"
-                    >
-                      <div class="dropdown-category-container"
-                           v-for="subcat in category.children"
-                           :key="subcat.id"
-                      >
-                        <b-link :to="`/${subcat.path}`">
-                          <p class="dropdown-category-header">{{ subcat.name }}</p>
-                        </b-link>
-                        <ul class="dropdown-category-list">
-                          <li v-for="subsubcat in subcat.children"
-                              :key="subsubcat.id"
-                          >
-                            <b-link :to="`/${subsubcat.path}`">
-                              {{ subsubcat.name }}
-                            </b-link>
-                            <ul>
-                              <li v-for="sub3cat in subsubcat.children"
-                                  :key="sub3cat.id"
-                              >
-                                <b-link :to="`/${sub3cat.path}`">
-                                  {{ sub3cat.name }}
-                                </b-link>
-                              </li>
-                            </ul>
-                            <div class="debug-stuff">{{ subsubcat }}</div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </client-only>
-                </div>
-              </b-nav-item>
-            </b-nav>
-          </b-col>
+          <TopMenuWithDropDown :set-show-drop-down="setShowDropDown"
+                               :show-dropdown="showDropdown"
+          />
         </b-row>
       </b-container>
     </header>
 
-    <div id="main-content">
+    <div id="main-content" style="margin-top: 16px">
       <b-container fluid>
         <router-view/>
       </b-container>
@@ -256,7 +202,8 @@ export default {
     LeftHandMenu: () => import('./mobile/LeftHandMenu'),
     ContactsBlock: () => import('./App/components/ContactsBlock/ContactsBlock'),
     LogoMain: () => import('./App/components/LogoMain'),
-    UserBtns: () => import('./App/components/UserBtn/UserBtns')
+    UserBtns: () => import('./App/components/UserBtn/UserBtns'),
+    TopMenuWithDropDown: () => import('./App/components/TopMenuWithDropDown')
   },
   data () {
     return {
@@ -295,6 +242,11 @@ export default {
     }
   },
   methods: {
+    // SETTERS
+    setShowDropDown (value) {
+      this.showDropdown = value
+    },
+    // OTHER
     ...mapActions([
       'CREATE_SUBSCRIPTION',
       'GET_ACTIVE_ORDER_FROM_API',
@@ -406,7 +358,8 @@ export default {
     },
     openBurgerMenu () {
       this.burgerMenuActive = !this.burgerMenuActive
-    }
+    },
+
   },
   serverPrefetch () {
     return Promise.all([
@@ -454,9 +407,11 @@ export default {
 #copyright-blk a {
   color: #f3d64b;
 }
+
 #copyright-blk a:hover {
   color: #edbc10;
 }
+
 #search-field .input-group {
   background: white;
   box-shadow: inset 0px 1px 3px rgb(0 0 0 / 20%);
@@ -468,6 +423,7 @@ export default {
   box-shadow: none;
   -webkit-box-shadow: none;
 }
+
 #search-field .input-group .form-input, #search-field .input-group .btn {
   background: transparent;
   background-color: transparent;
