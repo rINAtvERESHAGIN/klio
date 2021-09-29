@@ -1,5 +1,10 @@
 <template>
-  <b-col cols="12"
+  <b-col cols
+         xl="12"
+         ls="12"
+         md="12"
+         sm="0"
+         xs="0"
          id="desktop-address-bar"
          class="d-flex"
          style="height: 50px; padding-bottom: 0; padding-top: 0;"

@@ -2,8 +2,8 @@
   <div>
     <div class="info-container" v-for="(inf, index) in info" :key="index">
       <span class="city">{{ inf.city }}</span>
-      <a :href="`tel:${inf.telephone}`" >
-        <span class="telephone">{{inf.telephone}}</span>>
+      <a :href="`tel:${inf.telephone}`">
+        <span class="telephone">{{inf.telephone}}</span>
       </a>
     </div>
   </div>

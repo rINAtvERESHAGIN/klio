@@ -1,8 +1,12 @@
 <template>
   <b-row class="content-section">
     <b-col cols="12" md="10" lg="8" offset-md="1" offset-lg="2">
-      <b-breadcrumb :items="breadcrumbs"></b-breadcrumb>
-      <ContactAddressCard v-for="contact in CONTACTS" :key="contact.id" :contactData="contact" :visibility="current === contact.slug ? true : false" />
+      <b-breadcrumb :items="breadcrumbs"/>
+      <ContactAddressCard v-for="contact in CONTACTS"
+                          :key="contact.id"
+                          :contactData="contact"
+                          :visibility="current === contact.slug ? true : false"
+      />
     </b-col>
   </b-row>
 </template>

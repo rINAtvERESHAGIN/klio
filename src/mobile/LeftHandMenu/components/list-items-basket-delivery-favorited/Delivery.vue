@@ -25,7 +25,7 @@ export default {
     item: {
       text: 'Доставка',
       icon: 'mdi-truck-delivery-outline',
-      to: '/info/dostavka,'
+      to: '/info/dostavka'
     }
   }),
   methods: {

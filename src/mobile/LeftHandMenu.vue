@@ -4,7 +4,7 @@
     v-model="open"
     absolute
     temporary
-    :style="{'width': open ? '100%':'50%', 'z-index':'20000'}"
+    :style="{'width': open ? '100%':'50%', 'z-index':'20000', 'height': '100%'}"
   >
     <v-toolbar style="margin-bottom: 8px"
                flat
@@ -16,7 +16,7 @@
     </v-toolbar>
 
     <!--    кнопки для входа и указание локации-->
-    <div style="display: flex; justify-content: space-between; margin-bottom: 24px">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 24px; align-items: center">
       <EnterButton :close-drawer="handleCloseDrawer"/>
       <Location/>
     </div>

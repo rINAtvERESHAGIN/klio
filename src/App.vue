@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <!-- /mobile stuff-->
+    <LeftHandMenu :handle-close-drawer="openBurgerMenu"
+                  :open="burgerMenuActive"
+    />
     <header>
       <b-container fluid>
         <b-row class="d-sm-none d-lg-flex">
@@ -11,10 +15,7 @@
           <BurgerMenuButton :burger-menu-active="burgerMenuActive"
                             :open-burger-menu="openBurgerMenu"
           />
-          <!-- /mobile stuff-->
-          <LeftHandMenu :handle-close-drawer="openBurgerMenu"
-                        :open="burgerMenuActive"
-          />
+
           <ContactsBlock/>
           <LogoMain/>
           <UserBtns/>
