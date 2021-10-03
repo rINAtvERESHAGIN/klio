@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { items } from '../../example-data/data'
 import CatalogDrawerItems from './CatalogDrawerItems'
 import router from '../../../router'
 import { mapGetters } from 'vuex'
@@ -54,7 +53,6 @@ export default {
     CatalogDrawerItems
   },
   data: () => ({
-    itemsProducts: items,
     children: [],
     toolbarTitle: ''
   }),

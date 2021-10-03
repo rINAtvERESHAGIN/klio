@@ -9,16 +9,18 @@
                   img-width="1256"
                   img-height="480"
                   style="text-shadow: 1px 1px 2px #333;"
-                  v-if="LOADING_BANNERS === 'success'">
+                  v-if="LOADING_BANNERS === 'success'"
+      >
         <BannerItem v-for="banner in BANNERS" :key="banner.id" :bannerData="banner" />
       </b-carousel>
+
       <b-col cols="12" class="text-center" v-else-if="LOADING_BANNERS === 'pending'">
         <b-spinner type="grow" class="m-3"></b-spinner>
         <b-spinner type="grow" class="m-3"></b-spinner>
         <b-spinner type="grow" class="m-3"></b-spinner>
       </b-col>
-
     </b-row>
+
     <b-row>
       <b-col cols="3" id="leftbar" v-if="LEFT_MENU !== false" class="d-none d-xl-block">
         <ul v-if="LEFT_MENU">
@@ -164,6 +166,7 @@
         </b-col>
       </b-col>
     </b-row>
+
   </div>
 </template>
 
