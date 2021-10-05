@@ -307,9 +307,7 @@ export default {
       this.$axios
         .get(`/general/pages/${this.page_name}/detail`)
         .then(response => {
-          console.log('this.page_name', this.page_name)
           this.page = response.data
-          console.log('response.data', response.data)
           this.breadcrumbs = this.getBreadcrumbs()
         })
     }
