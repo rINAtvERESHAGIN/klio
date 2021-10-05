@@ -1,18 +1,55 @@
 <template>
   <div id="k-home-container">
     <b-row>
-      <b-carousel id="carousel-main"
-                  :interval="4000"
-                  controls
-                  indicators
-                  background="#ababab"
-                  img-width="1256"
-                  img-height="480"
-                  style="text-shadow: 1px 1px 2px #333;"
-                  v-if="LOADING_BANNERS === 'success'"
+      <!--      desktop-->
+      <b-col xl="12"
+             lg="12"
+             md="0"
+             sm="0"
+             xs="0"
+             class="d-none d-lg-block d-xl-block"
+             v-if="LOADING_BANNERS === 'success'"
       >
-        <BannerItem v-for="banner in BANNERS" :key="banner.id" :bannerData="banner" />
-      </b-carousel>
+        <b-carousel id="carousel-main"
+                    :interval="100000"
+                    controls
+                    indicators
+                    background="#ababab"
+                    img-width="1256"
+                    img-height="480"
+                    style="text-shadow: 1px 1px 2px #333;"
+        >
+          <BannerItem v-for="banner in BANNERS"
+                      :key="banner.id"
+                      :bannerData="banner"
+          />
+        </b-carousel>
+      </b-col>
+      <!--      mobile-->
+      <b-col xl="0"
+             lg="0"
+             md="0"
+             sm="12"
+             xs="12"
+             class="d-block d-sm-block d-md-block d-lg-none d-xl-none"
+             v-if="LOADING_BANNERS === 'success'"
+      >
+        <b-carousel id="carousel-main"
+                    :interval="100000"
+                    controls
+                    indicators
+                    background="#ababab"
+                    img-width="332"
+                    img-height="550"
+                    style="text-shadow: 1px 1px 2px #333;"
+                    v-if="LOADING_BANNERS === 'success'"
+        >
+          <BannerItemMobile v-for="banner in BANNERS"
+                            :key="banner.id"
+                            :bannerData="banner"
+          />
+        </b-carousel>
+      </b-col>
 
       <b-col cols="12" class="text-center" v-else-if="LOADING_BANNERS === 'pending'">
         <b-spinner type="grow" class="m-3"></b-spinner>
@@ -80,20 +117,39 @@
               <span>Подпишитесь на рассылку новостей и выгодных предложений от Клио!</span>
             </b-col>
             <b-col cols="12" md="8">
+
               <b-form @submit.prevent="subscribe" method="POST">
                 <b-input-group size="lg">
-                  <b-form-input v-model="subscriptionEmail" placeholder="e-mail" class="form-input"></b-form-input>
+                  <b-form-input v-model="subscriptionEmail"
+                                placeholder="e-mail"
+                                class="form-input"
+                  />
                   <b-input-group-append>
-                    <b-button size="md" text="Найти" type="submit" class="btn btn-red d-none d-md-block">
+                    <b-button size="md"
+                              text="Найти"
+                              type="submit"
+                              class="btn btn-red d-none d-md-block"
+                    >
                       Подписаться
                     </b-button>
                   </b-input-group-append>
                 </b-input-group>
-                <b-button squared size="md" text="Найти" type="submit" class="btn btn-red btn-block d-md-none mt-2 ml-3">
+                <!--                кнопка для мобильной версии-->
+                <b-button squared
+                          size="md"
+                          text="Найти"
+                          type="submit"
+                          class="btn btn-red btn-block d-md-none mt-2"
+                          style="margin-left: 0"
+                >
                   Подписаться
                 </b-button>
               </b-form>
-              <p class="form-error home-subscribe-error" v-if="err && err.email">{{ err.email[0] }}</p>
+              <p class="form-error home-subscribe-error"
+                 v-if="err && err.email"
+              >
+                {{ err.email[0] }}
+              </p>
             </b-col>
           </b-row>
         </div>
@@ -182,7 +238,8 @@ import CategoryCard from '../components/k-category-card.vue'
 import CategoryMenuItem from '../components/k-category-menu-item.vue'
 import ProductCard from '../components/k-product-card.vue'
 import Hidden from '../components/k-hidden.vue'
-
+import BannerItemMobile from '../components/BannerItemMobile'
+// 332 x 550
 export default {
   name: 'k-home',
   components: {
@@ -194,7 +251,8 @@ export default {
     CategoryCard,
     CategoryMenuItem,
     ProductCard,
-    Hidden
+    Hidden,
+    BannerItemMobile
   },
   data () {
     return {
