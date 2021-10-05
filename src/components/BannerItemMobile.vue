@@ -1,5 +1,5 @@
 <template>
-  <b-carousel-slide :img-src="banner.img" v-if="!banner.mobile">
+  <b-carousel-slide :img-src="banner.img" v-if="banner.mobile">
     <h1 v-if="banner.show_content"
         v-html="banner.name">
     </h1>
@@ -17,8 +17,8 @@
 </template>
 
 <script>
-
 export default {
+  name: 'BannerItemMobile',
   props: ['bannerData'],
   data () {
     return {
@@ -28,6 +28,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

@@ -26,7 +26,7 @@
     >
       <h2>{{ page.name }}</h2>
     </b-col>
-
+<!-- desktop-->
     <b-col align-self="center"
            v-if="page.content"
            v-html="page.content"
@@ -39,6 +39,7 @@
            offset-md="1"
     />
 
+<!--    mobile-->
     <b-col
         xl="0"
         lg="0"
